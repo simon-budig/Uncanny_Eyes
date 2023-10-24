@@ -89,10 +89,10 @@ struct {                // One-per-eye structure
   uint8_t           dmaIdx = 0; // Active DMA buffer # (alternate fill/send)
   Adafruit_ZeroDMA  dma;
  #ifdef PIXEL_DOUBLE
-  uint32_t          dmaBuf[2][120]; // Two 120-pixel buffers (32bit for doubling)
+  uint32_t          dmaBuf[2][SCREEN_WIDTH/2]; // Two 120-pixel buffers (32bit for doubling)
   DmacDescriptor   *descriptor[2];  // Pair of descriptors for doubled scanlines
  #else
-  uint16_t          dmaBuf[2][128]; // Two 128-pixel buffers
+  uint16_t          dmaBuf[2][SCREEN_WIDTH]; // Two 128-pixel buffers
   DmacDescriptor   *descriptor;     // Single active DMA descriptor
  #endif
   // DMA transfer-in-progress indicator and callback
@@ -101,9 +101,9 @@ struct {                // One-per-eye structure
 #elif defined(ARDUINO_ARCH_NRF52)
   uint8_t           dmaIdx = 0; // Active DMA buffer # (alternate fill/send)
  #ifdef PIXEL_DOUBLE
-  uint32_t          dmaBuf[2][240]; // Two 240-pixel buffers (32bit for doubling)
+  uint32_t          dmaBuf[2][SCREEN_WIDTH/2]; // Two 240-pixel buffers (32bit for doubling)
  #else
-  uint16_t          dmaBuf[2][128]; // Two 128-pixel buffers
+  uint16_t          dmaBuf[2][SCREEN_WIDTH]; // Two 128-pixel buffers
  #endif
 #endif
 
@@ -233,7 +233,7 @@ void setup(void) {
   // I noticed lots of folks getting right/left eyes flipped, or
   // installing upside-down, etc.  Logo split across screens may help:
   int x = eye[0].display->width() * NUM_EYES / 2;
-  int y = (eye[0].display->height() - SCREEN_HEIGHT) / 2;
+  int y = (eye[0].display->height() - LOGO_TOP_HEIGHT - LOGO_BOTTOM_HEIGHT) / 2;
   for(e=0; e<NUM_EYES; e++) { // Another pass, after all screen inits
     eye[e].display->fillScreen(0);
     #ifdef LOGO_TOP_WIDTH
@@ -679,16 +679,16 @@ void frame( // Process motion for a single frame of left or right eye
   // Process motion, blinking and iris scale into renderable values
 
   // Scale eye X/Y positions (0-1023) to pixel units used by drawEye()
-  eyeX = map(eyeX, 0, 1023, 0, SCLERA_WIDTH  - 128);
-  eyeY = map(eyeY, 0, 1023, 0, SCLERA_HEIGHT - 128);
-  if(eyeIndex == 1) eyeX = (SCLERA_WIDTH - 128) - eyeX; // Mirrored display
+  eyeX = map(eyeX, 0, 1023, 0, SCLERA_WIDTH  - SCREEN_WIDTH);
+  eyeY = map(eyeY, 0, 1023, 0, SCLERA_HEIGHT - SCREEN_HEIGHT);
+  if(eyeIndex == 1) eyeX = (SCLERA_WIDTH - SCREEN_WIDTH) - eyeX; // Mirrored display
 
   // Horizontal position is offset so that eyes are very slightly crossed
   // to appear fixated (converged) at a conversational distance.  Number
   // here was extracted from my posterior and not mathematically based.
   // I suppose one could get all clever with a range sensor, but for now...
   if(NUM_EYES > 1) eyeX += 4;
-  if(eyeX > (SCLERA_WIDTH - 128)) eyeX = (SCLERA_WIDTH - 128);
+  if(eyeX > (SCLERA_WIDTH - SCREEN_WIDTH)) eyeX = (SCLERA_WIDTH - SCREEN_WIDTH);
 
   // Eyelids are rendered using a brightness threshold image.  This same
   // map can be used to simplify another problem: making the upper eyelid
