@@ -11,7 +11,8 @@
 //#define SYMMETRICAL_EYELID
 
 // Enable ONE of these #includes -- HUGE graphics tables for various eyes:
-#include "graphics/defaultEye.h"      // Standard human-ish hazel eye -OR-
+//#include "graphics/defaultEye.h"      // Standard human-ish hazel eye -OR-
+#include "graphics/defaultBigEye.h"      // Standard human-ish hazel eye -OR-
 //#include "graphics/dragonEye.h"     // Slit pupil fiery dragon/demon eye -OR-
 //#include "graphics/noScleraEye.h"   // Large iris, no sclera -OR-
 //#include "graphics/goatEye.h"       // Horizontal pupil goat/Krampus eye -OR-
@@ -45,7 +46,7 @@ eyeInfo_t eyeInfo[] = {
 #define DISPLAY_RESET     GFX_NOT_DEFINED  // Display reset pin
 #define DISPLAY_BACKLIGHT  3
 #define BACKLIGHT_MAX    255
-#define PIXEL_DOUBLE
+#undef PIXEL_DOUBLE
 
 // INPUT SETTINGS (for controlling eye motion) -----------------------------
 
