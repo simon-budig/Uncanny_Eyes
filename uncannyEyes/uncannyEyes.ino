@@ -116,8 +116,8 @@ uint32_t startTime;  // For FPS indicator
 // boards are expected to be the same architecture & endianism.
 struct {
   uint16_t iScale;  // These are basically the same arguments as
-  uint8_t  scleraX; // drawEye() expects, explained in that function.
-  uint8_t  scleraY;
+  uint16_t scleraX; // drawEye() expects, explained in that function.
+  uint16_t scleraY;
   uint8_t  uT;
   uint8_t  lT;
 } syncStruct = { 512,
@@ -361,8 +361,8 @@ SPISettings settings(SPI_FREQ, MSBFIRST, SPI_MODE0);
 void drawEye( // Renders one eye.  Inputs must be pre-clipped & valid.
   uint8_t  e,       // Eye array index; 0 or 1 for left/right
   uint16_t iScale,  // Scale factor for iris (0-1023)
-  uint8_t  scleraX, // First pixel X offset into sclera image
-  uint8_t  scleraY, // First pixel Y offset into sclera image
+  uint16_t scleraX, // First pixel X offset into sclera image
+  uint16_t scleraY, // First pixel Y offset into sclera image
   uint8_t  uT,      // Upper eyelid threshold value
   uint8_t  lT) {    // Lower eyelid threshold value
 
