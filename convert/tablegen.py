@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 """
 Image converter for 'Uncanny Eyes' project.  Generates tables for
@@ -85,7 +85,7 @@ try:
 except IndexError:
     FILENAME = 'lid-upper-symmetrical.png' # Default if argv 3 not provided
 IMAGE = Image.open(FILENAME)
-if (IMAGE.size[0] != 128) or (IMAGE.size[1] != 128):
+if (IMAGE.size[0] != 240) or (IMAGE.size[1] != 240):
     sys.stderr.write('Image size must match screen size')
     exit(1)
 IMAGE = IMAGE.convert('L')
@@ -114,7 +114,7 @@ try:
 except IndexError:
     FILENAME = 'lid-lower-symmetrical.png' # Default if argv 4 not provided
 IMAGE = Image.open(FILENAME)
-if (IMAGE.size[0] != 128) or (IMAGE.size[1] != 128):
+if (IMAGE.size[0] != 240) or (IMAGE.size[1] != 240):
     sys.stderr.write('Image size must match screen size')
     exit(1)
 IMAGE = IMAGE.convert('L')
@@ -137,7 +137,7 @@ try:
 except IndexError:
     FILENAME = 'lid-upper.png' # Default filename if argv 5 not provided
 IMAGE = Image.open(FILENAME)
-if (IMAGE.size[0] != 128) or (IMAGE.size[1] != 128):
+if (IMAGE.size[0] != 240) or (IMAGE.size[1] != 240):
     sys.stderr.write('Image size must match screen size')
     exit(1)
 IMAGE = IMAGE.convert('L')
@@ -163,7 +163,7 @@ try:
 except IndexError:
     FILENAME = 'lid-lower.png' # Default filename if argv 6 not provided
 IMAGE = Image.open(FILENAME)
-if (IMAGE.size[0] != 128) or (IMAGE.size[1] != 128):
+if (IMAGE.size[0] != 240) or (IMAGE.size[1] != 240):
     sys.stderr.write('Image size must match screen size')
     exit(1)
 IMAGE = IMAGE.convert('L')
@@ -184,7 +184,7 @@ for y in range(IMAGE.size[1]):
 try:
     IRIS_SIZE = int(sys.argv[7])
 except IndexError:
-    IRIS_SIZE = 80 # Default size if argv 7 not provided
+    IRIS_SIZE = 150 # Default size if argv 7 not provided
 if IRIS_SIZE % 2 != 0:
     sys.stderr.write('Iris diameter must be even value')
     exit(1)
